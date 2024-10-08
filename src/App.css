@@ -72,8 +72,8 @@ button{
   margin: 15px;
   border: none;
   color: white;
-  cursor: pointer;
   background-color: #1a26c6;
+  cursor: pointer;
   width: 20%;
   font-size: 16px;
 }

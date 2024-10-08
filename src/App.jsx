@@ -5,37 +5,41 @@ import axios from "axios";
 function App() {
 
   const[values, setValues] = useState({
-    fullName:'',
+    name:'',
     email:'',
+    address:'',
     prn:'',
-    contact:'',
+    phone:'',
     gender:'',
     department:'',
     resume:'',
-    linkedInURL:''
+    linkedin:''
 })
 
-const handleChanges = (e) =>{
-  setValues({...values, [e.target.name]:[e.target.value]})
-  axios.post(url,{}).then(result=>{ //ask url from prathamesh
-    console.log(result)
-  })
-  .catch(error =>{
-    console.log(error)
-  })
-}
 
-const handleSubmit=(e) =>{
-  e.preventDefault();
-  console.log(values);
-}
+const handleChanges = (e) => {
+  setValues({ ...values, [e.target.name]: e.target.value });
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault(); 
+  console.log(values);  
+
+  axios.post('https://poc-backend-spring-fdcuhxb5ghandgcd.canadacentral-01.azurewebsites.net/poc/student', values) //get the link from Prathamesh
+    .then(result => {
+      console.log(result);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
 
   return (
     <div className='container'>
       <h1>Candidate Registration Form</h1>
       <form onSubmit={handleSubmit}> 
-        <label htmlFor="fullName">Name</label>
-        <input type="text" placeholder='Enter name' name='fullName' onChange={(e) => handleChanges(e)} required value={values.fullName}/>
+        <label htmlFor="name">Name</label>
+        <input type="text" placeholder='Enter name' name='name' onChange={(e) => handleChanges(e)} required value={values.name}/>
 
         <label htmlFor="email">Email</label>
         <input type="email" placeholder='Enter email'name='email' onChange={(e) => handleChanges(e)} required value={values.email}/>
@@ -43,8 +47,11 @@ const handleSubmit=(e) =>{
         <label htmlFor="prn">PRN</label>
         <input type="text" placeholder='Enter PRN'name='prn' onChange={(e) => handleChanges(e)} required value={values.prn}/>
 
-        <label htmlFor="contact">Contact</label>
-        <input type="text" placeholder='Enter phone number'name='contact' onChange={(e) => handleChanges(e)} required value={values.contact}/>
+        <label htmlFor="phone">Contact</label>
+        <input type="text" placeholder='Enter phone number'name='phone' onChange={(e) => handleChanges(e)} required value={values.phone}/>
+
+        <label htmlFor="address">Address</label>
+        <input type="text" placeholder='Enter Address' name='address' onChange={(e) => handleChanges(e)} required value={values.address}/>
 
         <label htmlFor="gender">Gender</label>
         <input type="radio" value= "male" name='gender'onChange={(e) => handleChanges(e)} /> Male
@@ -53,6 +60,7 @@ const handleSubmit=(e) =>{
 
         <label htmlFor="department">Department</label>
         <select name="department" id="department" onChange={(e) => handleChanges(e)} value={values.department}>
+          <option value="" disabled>--select--</option> 
           <option value="cs">CS</option>
           <option value="IT">IT</option>
           <option value="AIDS">AIDS</option>
@@ -60,10 +68,10 @@ const handleSubmit=(e) =>{
         </select>
 
         <label htmlFor="resume">Resume</label>
-        <input type="file" placeholder='Select Resume'name='resume' onChange={(e) => handleChanges(e)} value={values.resume}/>
+        <input type="text" placeholder='Select Resume'name='resume' onChange={(e) => handleChanges(e)} value={values.resume}/>
 
-        <label htmlFor="linkedInURL">LinkedIn Profile Link</label>
-        <input type="text" placeholder='Enter LinkedIn Profile Link' name='linkedInURL'onChange={(e) => handleChanges(e)} value={values.linkedInURL}/>
+        <label htmlFor="linkedin">LinkedIn Profile Link</label>
+        <input type="text" placeholder='Enter LinkedIn Profile Link' name='linkedin'onChange={(e) => handleChanges(e)} value={values.linkedin}/>
 
         <button type='submit'>Submit</button>
       </form>
